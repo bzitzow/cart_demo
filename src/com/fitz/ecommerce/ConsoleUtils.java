@@ -3,13 +3,16 @@ package com.fitz.ecommerce;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
+import java.util.Map;
 
 
 public class ConsoleUtils {
 
-	final static String FORMATTER = "%1$-40s %2$10s %3$10s %4$10s";
+	final static String CART_FORMATTER = "%1$-40s %2$10s %3$10s %4$10s";
+	final static String CATALOG_FORMATTER = "%1$-8s %2$-40s %3$-10s %4$-10s %5$-5s";
 	
-	final static String WELCOME = "Welcome %s!\nAvailable products:";
+	final static String WELCOME = "Welcome %s!\nProducts we offer:\n";
 	final static String SELECT_OPTION = "Please enter the product id, "
 			+ "then type <1>, then <return>, to add to cart.\n"
 			+ "Enter (h) for a list of available commands.";
@@ -24,6 +27,34 @@ public class ConsoleUtils {
 			
 	
 
+	public static void displayWelcome(String customerName) {
+		System.out.println(String.format(WELCOME,customerName)); }
+	
+	
+	public static void displayCatalog(Map<Integer, Product> catalog) {
+		
+		String header = String.format(CATALOG_FORMATTER, "ID", "Product", "Unit", "Quantity", "Cost" );
+		System.out.println(header);
+		
+		for (Map.Entry<Integer, Product> entry : catalog.entrySet()) {
+
+			Integer productId = entry.getKey();
+			String productName = entry.getValue().getProductName();
+			String unit = entry.getValue().getUnit().toString();
+			Integer quantity = entry.getValue().getQuantityPerProduct();
+			BigDecimal unitCost = entry.getValue().getCost();
+
+
+			System.out.println(String.format(CATALOG_FORMATTER, productId, productName, unit, quantity, unitCost));
+		}
+		
+		System.out.println("\n");
+		
+		
+	}
+	
+	
+	
 	public static void printItemizedList(String content) {
 
 		System.out.println(content);
