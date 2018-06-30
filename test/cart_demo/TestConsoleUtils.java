@@ -86,20 +86,32 @@ class TestConsoleUtils {
 	void testWelcome() {
 		
 		ConsoleUtils.displayWelcome("Nancy Onesy");
+		ConsoleUtils.displayCatalog(catalog);
 		
 		
 	}
 	
+	
 	@Test
-	void testDisplayCatalog() {
+	void testDisplaySelectPrompt() {
 		
-		ConsoleUtils.displayCatalog(catalog);
+		int response = ConsoleUtils.displaySelectPrompt();
+		assertTrue(response>0);
+		
+		if (!catalog.keySet().contains(response)) {
+			
+			ConsoleUtils.displayReselect(response);
+			
+		}
+		
+		else {
+			
+			ConsoleUtils.displayConfirm(catalog.get(response).getProductName());
+			
+		}
+		
 		
 	} 
-	
-	
-	
-	
-	
+		
 
 }
