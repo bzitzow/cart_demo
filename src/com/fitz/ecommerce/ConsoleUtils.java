@@ -13,12 +13,14 @@ public class ConsoleUtils {
 
 	final static String WELCOME = "Welcome %s!\r\nProducts we offer:\r\n";
 
-	final static String SELECT_PRODUCT = "To select, please enter the product id, " + "then <return>, to add to cart.\r\n"
-			+ "Enter (h) for a list of available commands.";
+	final static String SELECT_PRODUCT = "To select, please enter the product id, "
+			+ "then <return>, to add to cart.\r\n" + "Enter (h) for a list of available commands.";
 
-	final static String PROMPT_CONFIRM = "You entered %s. Please enter quantity, or q to cancel.";
+	final static String SELECT_QUANTITY = "Please enter the quantity you'd like to purchase, or q to cancel.";
+
+	final static String PROMPT_CONFIRM = "You selected %s.";
 	final static String PROMPT_RESELECT = "I could not find your response %s in the catalog. Please try again\r\n";
-	
+
 	final static String CONFIRM_ADD = "%s, %s added to cart.";
 	final static String PROMPT_CHECKOUT = "Your total is %s. Please select one of the payment options:\n"
 			+ "<v> Visa\n<p>Paypal";
@@ -54,35 +56,15 @@ public class ConsoleUtils {
 
 	public static int displaySelectPrompt() {
 
-		String selectString = null;
-		int selection = -1;
-
 		System.out.println(SELECT_PRODUCT);
+		return readIntFromConsole();
 
-		try {
-			selectString = bufferedReader.readLine();
-		} catch (IOException e) {
+	}
 
-			System.out.println("Could not parse console input.");
-			e.printStackTrace();
-			System.exit(0);
-		}
+	public static int displayQuantityPrompt() {
 
-		try {
-
-			selection = Integer.parseInt(selectString);
-
-		} catch (Exception e) {
-
-			System.out.println("Selection not recognized. Please try again");
-			displaySelectPrompt();
-			
-
-		}
-		
-		return selection;
-		
-		
+		System.out.println(SELECT_QUANTITY);
+		return readIntFromConsole();
 
 	}
 
@@ -92,54 +74,42 @@ public class ConsoleUtils {
 
 	}
 
-	
 	public static void displayReselect(int response) {
-		
+
 		System.out.println(String.format(PROMPT_RESELECT, response));
 		displaySelectPrompt();
-		
+
 	}
-	
+
 	public static void displayConfirm(String product) {
-		
+
 		System.out.println(String.format(PROMPT_CONFIRM, product));
-		
+
 	}
-	
-	public static int displaySelectQuantity() {
 
-		String selectString = null;
-		int selection = -1;
+	private static int readIntFromConsole() {
 
+		String s = null;
+		int response = -1;
 
 		try {
-			selectString = bufferedReader.readLine();
+			s = bufferedReader.readLine();
 		} catch (IOException e) {
 
 			System.out.println("Could not parse console input.");
 			e.printStackTrace();
-			System.exit(0);
+
 		}
 
 		try {
-
-			selection = Integer.parseInt(selectString);
-
+			response = Integer.parseInt(s);
 		} catch (Exception e) {
-
-			System.out.println("Quantity not recognized. Please try again");
-			displaySelectPrompt();
-			
-
+			System.out.println("Could not parse int");
+			return response;
 		}
-		
-		return selection;
-		
-		
+
+		return response;
 
 	}
-	
-	
-	
 
 }
