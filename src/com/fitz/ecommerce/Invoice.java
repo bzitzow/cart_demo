@@ -10,7 +10,7 @@ public class Invoice {
 
 	private int customerId;
 
-	private HashMap<Integer, Integer> cart;
+	private Map<Integer, Integer> cart;
 
 	public Invoice(int customerId) {
 
@@ -21,9 +21,19 @@ public class Invoice {
 
 	public void addProduct(Integer productId, Integer quantity) {
 
-		Integer count = cart.get(productId);
+		Integer count = null;
+
+		// If there aren't products of this kind in the cart initialize count to zero
+		// Otherwise get the current quantity
+
+		if (!cart.keySet().contains(productId)) {
+			count = 0;
+		} else {
+			count = cart.get(productId);
+		}
+
 		count += quantity;
-		this.cart.put(productId, count);
+		cart.put(productId, count);
 
 	}
 
@@ -46,52 +56,44 @@ public class Invoice {
 				cart.put(productId, 0);
 				return;
 			}
-			
+
 			else {
-				
+
 				// Cancel transaction
 				return;
-				
+
 			}
 
 		}
-		
+
 		else {
-			
+
 			count -= quantity;
 			this.cart.put(productId, count);
 			return;
-			
+
 		}
 
-
-
 	}
-	
+
 	public BigDecimal getCartTotal() {
-		
+
 		BigDecimal total = new BigDecimal(BigInteger.ZERO, 2);
-		
-		for (Map.Entry<Integer, Integer> entry: cart.entrySet()) {
-			
+
+		for (Map.Entry<Integer, Integer> entry : cart.entrySet()) {
+
 			Integer quantity = entry.getValue();
 			Product p = new Product(entry.getKey());
-			
-			total.add(p.getCost().multiply(new BigDecimal(quantity)));
-			
-		}
-		
-		
-		return total;
-		
-		
-	}
-	
-	
-	
-	
 
-	public HashMap<Integer, Integer> getCart() {
+			total.add(p.getCost().multiply(new BigDecimal(quantity)));
+
+		}
+
+		return total;
+
+	}
+
+	public Map<Integer, Integer> getCart() {
 		return this.cart;
 	}
 
