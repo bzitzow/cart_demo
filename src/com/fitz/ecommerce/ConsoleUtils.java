@@ -12,14 +12,16 @@ public class ConsoleUtils {
 	final static String CATALOG_FORMATTER = "%1$-8s %2$-40s %3$-10s %4$-10s %5$-5s";
 
 	final static String WELCOME = "Welcome %s!\r\nProducts we offer:\r\n";
+	final static String BYE = "Bye for now!";
 
 	final static String SELECT_PRODUCT = "To select, please enter the product id, "
-			+ "then <return>, to add to cart.\r\n" + "Enter (h) for a list of available commands.";
+			+ "then <return>, to add to cart.\r\n" + "Enter (h) for a list of available commands."
+					+ "Enter <q> to exit.";
 
 	final static String SELECT_QUANTITY = "Please enter the quantity you'd like to purchase, or q to cancel.";
 
 	final static String PROMPT_CONFIRM = "You selected %s.";
-	final static String PROMPT_RESELECT = "I could not find your response %s in the catalog. Please try again\r\n";
+	final static String PROMPT_RESELECT = "I could not find your response %s in the catalog. Please try again.\r\n";
 
 	final static String CONFIRM_ADD = "%s, %s added to cart.";
 	final static String PROMPT_CHECKOUT = "Your total is %s. Please select one of the payment options:\n"
@@ -32,6 +34,11 @@ public class ConsoleUtils {
 
 	public static void displayWelcome(String customerName) {
 		System.out.println(String.format(WELCOME, customerName));
+	}
+	
+	public static void displayBye() {
+		System.out.println(BYE);
+		System.exit(0);
 	}
 
 	public static void displayCatalog(Map<Integer, Product> catalog) {
@@ -57,7 +64,18 @@ public class ConsoleUtils {
 	public static int displaySelectPrompt() {
 
 		System.out.println(SELECT_PRODUCT);
-		return readIntFromConsole();
+		
+		int response = readIntFromConsole();
+		
+		if (response == -2) {
+			
+			displaySelectPrompt();
+		}
+		
+		return response;
+		
+		
+		
 
 	}
 
@@ -77,7 +95,7 @@ public class ConsoleUtils {
 	public static void displayReselect(int response) {
 
 		System.out.println(String.format(PROMPT_RESELECT, response));
-		displaySelectPrompt();
+		return;
 
 	}
 
@@ -100,14 +118,18 @@ public class ConsoleUtils {
 			e.printStackTrace();
 
 		}
+		
+		// Use -1 to cancel. Use -2 to indicate non-integer entry 
+		if (s.toLowerCase().equals("q")) {displayBye();}
 
 		try {
 			response = Integer.parseInt(s);
+			
 		} catch (Exception e) {
-			System.out.println("Could not parse int");
-			return response;
+			System.out.println("Could not parse integer from " + s);
+			return response--;
 		}
-
+		
 		return response;
 
 	}

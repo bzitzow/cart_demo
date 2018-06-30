@@ -3,9 +3,7 @@ package cart_demo;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -15,10 +13,10 @@ import com.fitz.ecommerce.ConsoleUtils;
 import com.fitz.ecommerce.Product;
 import com.fitz.ecommerce.Unit;
 
-class TestConsoleUtils {
-
+class TestConsoleIntegration {
+	
 	private Map<Integer, Product> catalog = new HashMap<Integer, Product>();
-
+	
 	@BeforeEach
 	void setup() {
 
@@ -47,42 +45,40 @@ class TestConsoleUtils {
 	}
 
 	@Test
-
-	void testWelcome() {
-
+	void test() {
+		
 		ConsoleUtils.displayWelcome("Nancy Onesy");
 		ConsoleUtils.displayCatalog(catalog);
+		
+		int response = ConsoleUtils.displaySelectPrompt();
+		
+		response = validateResponse(response);
+
+
+		ConsoleUtils.displayConfirm(catalog.get(response).getProductName());
+
+
+		
+		int quantity = ConsoleUtils.displayQuantityPrompt();
+		assertTrue(response > 0);
+		
 
 	}
-
-	@Test
-	void testDisplaySelectPrompt() {
-
-		int response = ConsoleUtils.displaySelectPrompt();
-
-
+	
+	private int validateResponse(int response) {
+		
+				
 		if (!catalog.keySet().contains(response)) {
 
 			ConsoleUtils.displayReselect(response);
-
+			response = ConsoleUtils.displaySelectPrompt();
+			validateResponse(response);
+			
 		}
-
-		else {
-
-			ConsoleUtils.displayConfirm(catalog.get(response).getProductName());
-
-		}
-
-	}
-	
-	
-	@Test
-	void testDisplayQuantityPrompt() {
-
-		//TODO: Build check on inventory
-		int response = ConsoleUtils.displayQuantityPrompt();
-		assertTrue(response > 0);
-
+		return response;
+		
+		
+		
 	}
 
 }
