@@ -1,0 +1,102 @@
+<?xml version ="1.0" ?>
+<project default="main">
+
+	<tstamp />
+
+	<property file="build.properties" />
+	
+
+	<target name="main" depends="deploy" />
+
+	<target name="clean">
+
+		<echo>
+			Cleaning up previous build...
+		</echo>
+
+		<delete dir="${deploy.dir}" /> 
+
+	</target>
+
+	<target name="make-deploy-dir" depends="clean">
+
+		<mkdir dir="${deploy.dir}" />
+
+		<!--Add dirs -->
+		<mkdir dir="${deploy.dir}/src" />
+		<mkdir dir="${deploy.dir}/test" />
+		<mkdir dir="${deploy.dir}/bin" />
+
+
+		<copy todir="${deploy.dir}/src">
+
+			<fileset dir="${src.dir}"/>
+
+		</copy>
+
+		<copy todir="${deploy.dir}/test">
+
+			<fileset dir="${test.dir}" />
+		</copy>
+		
+
+	</target>
+
+	<target name="compile" depends="make-deploy-dir">
+
+		<javac srcdir="${src.dir}" destdir="${deploy.dir}/bin"
+			debug="on" compiler="${build.compiler}">
+
+		</javac>
+
+
+	</target>
+
+
+	<target name="make-jar" depends="compile">
+
+
+
+		<jar destfile="${deploy.dir}/cart_demo.jar" basedir="${deploy.dir}">
+
+			<manifest>
+				<attribute name="Manifest-Version" value="1.0" />
+				<attribute name="Main-Class" value="com.fitz.main.CartDemo" />
+				<attribute name="Class-Path" value="." />
+			</manifest>
+
+		</jar>
+
+	</target>
+
+
+	<target name="create-shell-script" depends="make-jar">
+
+		<echo file="${deploy.dir}/run_cart_demo.bat">@echo off
+
+			java -version
+			java -cp bin com.fitz.main.CartDemo
+		</echo>
+		
+		<echo file="${deploy.dir}/readme.txt">
+		build date : ${DSTAMP}
+
+		</echo>
+		<echo file="${deploy.dir}/run_cart_demo.sh">
+
+			java -version
+			java -cp bin com.fitz.main.CartDemo
+		</echo>
+
+	</target>
+
+	<target name="deploy" depends="create-shell-script">
+
+		<zip destfile="../../deploy.zip" basedir="${deploy.dir}"
+			update="false">
+		</zip>
+
+
+	</target>
+
+</project>
