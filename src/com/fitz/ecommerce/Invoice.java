@@ -10,11 +10,15 @@ public class Invoice {
 
 	private int customerId;
 
-	private Map<Integer, Integer> cart;
+	final String INVOICE_FORMATTER = "%1$-40s %2$10s %3$10s %4$10s";
 
-	public Invoice(int customerId) {
+	private Map<Integer, Integer> cart;
+	private Map<Integer, Product> catalog = new HashMap<Integer, Product>();
+
+	public Invoice(int customerId, Map<Integer, Product> catalog) {
 
 		this.customerId = customerId;
+		this.catalog = catalog;
 		this.cart = new HashMap<Integer, Integer>();
 
 	}
@@ -95,6 +99,30 @@ public class Invoice {
 
 	public Map<Integer, Integer> getCart() {
 		return this.cart;
+	}
+
+	public void viewInvoice() {
+
+		BigDecimal total = new BigDecimal(BigInteger.ZERO, 2);
+		String header = String.format(INVOICE_FORMATTER, "Product", "Quantity", "Unit Cost", "Total");
+		System.out.println(header);
+		
+		for (Map.Entry<Integer, Integer> entry : cart.entrySet()) {
+
+			Integer quantity = entry.getValue();
+			Product p = catalog.get((entry.getKey()));
+			BigDecimal cost = p.getCost();
+			BigDecimal q = new BigDecimal(quantity);
+			BigDecimal subTotal = cost.multiply(q);
+			total = total.add(subTotal);
+
+			System.out.println(String.format(INVOICE_FORMATTER, p.getProductName(), quantity, p.getCost().toString(), subTotal));
+
+		}
+		
+		System.out.println(String.format(INVOICE_FORMATTER,"Grand Total", "", "", total.toString()));
+		
+
 	}
 
 }

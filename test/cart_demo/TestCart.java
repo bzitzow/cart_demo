@@ -51,7 +51,7 @@ class TestCart {
 
 		Integer customerId = new Integer(0);
 
-		Invoice invoice = new Invoice(customerId);
+		Invoice invoice = new Invoice(customerId, catalog);
 
 		invoice.addProduct(0, 1);
 		invoice.addProduct(0, 1);
