@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 import com.fitz.ecommerce.ConsoleUtils;
+import com.fitz.main.CartDemo;
 
 class TestConsoleIntParser {
 
@@ -17,11 +18,11 @@ class TestConsoleIntParser {
 		String s4 = "02";
 		String s5 = "c";
 		
-		assertTrue(ConsoleUtils.parseIntFromConsole(s1) == -1);
-		assertTrue(ConsoleUtils.parseIntFromConsole(s2) == 2);
-		assertTrue(ConsoleUtils.parseIntFromConsole(s3) == -1);
-		assertTrue(ConsoleUtils.parseIntFromConsole(s4) == 2);
-		assertTrue(ConsoleUtils.parseIntFromConsole(s5) == -1);
+		assertFalse(ConsoleUtils.isValidInt(s1));
+		assertTrue(ConsoleUtils.isValidInt(s2));
+		assertFalse(ConsoleUtils.isValidInt(s3));
+		assertTrue(ConsoleUtils.isValidInt(s4));
+		assertFalse(ConsoleUtils.isValidInt(s5));
 		
 	}
 

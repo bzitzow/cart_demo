@@ -1,53 +1,19 @@
 package com.fitz.main;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import com.fitz.ecommerce.ConsoleUtils;
 import com.fitz.ecommerce.Product;
 import com.fitz.ecommerce.ShoppingSession;
 import com.fitz.ecommerce.Unit;
 
 public class CartDemo {
 
-	// UI Messages
 
-	final static String CART_FORMATTER = "%1$-40s %2$10s %3$10s %4$10s";
-	final static String CATALOG_FORMATTER = "%1$-8s %2$-40s %3$-10s %4$-10s %5$-5s";
-
-	final static String WELCOME = "Welcome %s!\r\nProducts we offer:\r\n";
-	final static String BYE = "Bye for now!";
-
-	final static String CONFIRM_PRODUCT = "You selected %s.";
-	final static String CONFIRM_ADD = "Added %s %s to your cart.";
-	final static String CONFIRM_REMOVE = "Removed %s %s from your cart.";
-
-	final static String PROMPT_SELECT_PRODUCT = "To select, please enter the product id, "
-			+ "then <return>, to add to cart.\r\nEnter <q> to exit.";
-	final static String PROMPT_SELECT_QUANTITY = "Please enter the quantity you'd like to purchase, or q to cancel.";
-	final static String PROMPT_RESELECT = "I could not find your response %s in the catalog. Please try again.\r\n";
-	final static String PROMPT_INVALID_QUANTITY = "We are unable to fulfill order with quantities less than one. "
-			+ "Please re-enter the quantity you wish to purchase.\r\n";
-	final static String PROMPT_CHECKOUT = "Your total is %s. Please select one of the payment options:\n"
-			+ "<v> Visa\n<p>Paypal";
-	final static String PROMPT_CONTINUE_SHOPPING = "Continue shopping <s>, view cart <v>, remove items from cart <r>, checkout now <c>, or quit <q>?";
-	final static String PROMPT_EDIT_CART = "Continue shopping <s> or remove item from cart <r>?";
-	final static String PROMPT_REMOVE_PRODUCT = "Remove from cart? Please enter the product Id. "
-			+ "<s> to cancel and continue shopping, <c> to checkout now, <q> to quit.";
-	final static String PROMPT_REMOVE_QUANTITY = "Please enter the quantity to remove."
-			+ "<s> to cancel and continue shopping, <c> to checkout now, <q> to quit.";
-
-	// Console codes
-	private static List<String> consoleCodes = new ArrayList<String>();
 
 	public static void main(String[] args) {
 
-		// displayWelcome("Nancy Onesy, Member 111!");
-
-		// createConsoleCodes();
 
 		ShoppingSession session = new ShoppingSession(111, createCatalog());
 

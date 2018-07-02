@@ -23,7 +23,7 @@ public class Invoice {
 
 	}
 
-	public void addProduct(Integer productId, Integer quantity) {
+	public void addToCart(Integer productId, Integer quantity) {
 
 		Integer count = null;
 
@@ -41,11 +41,14 @@ public class Invoice {
 
 	}
 
-	public void deleteProduct(Integer productId, Integer quantity) {
+	public void removeFromCart(Integer productId, Integer quantity) {
 
-		if (quantity <= 0) {
+		String productName = catalog.get(productId).getProductName();
 
-			System.out.println(String.format("Sorry, you eneterd %s. Please enter a positive whole number", quantity));
+		if (!cart.containsKey(productId)) {
+
+			System.out.println(String
+					.format("I could not find this item in the cart %s. Please re-enter the product Id", productName));
 			return;
 
 		}
@@ -54,26 +57,17 @@ public class Invoice {
 
 		if (quantity >= cart.get(productId)) {
 
-			// Remove all <product> from cart Yes, No , Cancel
-			boolean response = false;
-			if (response) {
-				cart.put(productId, 0);
-				return;
-			}
-
-			else {
-
-				// Cancel transaction
-				return;
-
-			}
+			// TODO: Message: Remove all <product> from cart Yes, No , Cancel
+			// For now, just blow away the table entry
+			System.out.println(String.format("Removed %s from your cart.", productName));
+			cart.remove(productId);
 
 		}
 
 		else {
 
 			count -= quantity;
-			this.cart.put(productId, count);
+			cart.put(productId, count);
 			return;
 
 		}
@@ -103,10 +97,16 @@ public class Invoice {
 
 	public void viewInvoice() {
 
+		if (cart.size() == 0) {
+			System.out.println("There are no items in your cart");
+			return;
+		}
+
 		BigDecimal total = new BigDecimal(BigInteger.ZERO, 2);
 		String header = String.format(INVOICE_FORMATTER, "Product", "Quantity", "Unit Cost", "Total");
+		System.out.println("Your cart:\r\n");
 		System.out.println(header);
-		
+
 		for (Map.Entry<Integer, Integer> entry : cart.entrySet()) {
 
 			Integer quantity = entry.getValue();
@@ -116,12 +116,13 @@ public class Invoice {
 			BigDecimal subTotal = cost.multiply(q);
 			total = total.add(subTotal);
 
-			System.out.println(String.format(INVOICE_FORMATTER, p.getProductName(), quantity, p.getCost().toString(), subTotal));
+			System.out.println(
+					String.format(INVOICE_FORMATTER, p.getProductName(), quantity, p.getCost().toString(), subTotal));
 
 		}
-		
-		System.out.println(String.format(INVOICE_FORMATTER,"Grand Total", "", "", total.toString()));
-		
+
+		System.out.println(String.format(INVOICE_FORMATTER, "Grand Total", "", "", total.toString()));
+		System.out.println("\r\n");
 
 	}
 

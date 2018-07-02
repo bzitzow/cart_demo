@@ -10,7 +10,7 @@ public class ShoppingSession implements ShoppingTask {
 	final String CATALOG_FORMATTER = "%1$-8s %2$-40s %3$-10s %4$-10s %5$-5s";
 	final String PROMPT_OPTIONS = "Please choose one of the options above.";
 	final String OPTIONS = "<s> Continue shopping\r\n<a> Add to cart\r\n" + "<r> Remove from cart\r\n<v> View cart\r\n"
-			+ "<c> Checkout\r\n<e> Clear cart\r\n<q> Quit\r\n";
+			+ "<c>Checkout\r\n<e>Clear cart\r\n<q> Quit\r\n";
 
 	public ShoppingSession(int customerId, Map<Integer, Product> catalog) {
 
@@ -75,48 +75,9 @@ public class ShoppingSession implements ShoppingTask {
 
 	@Override
 	public String removeFromCart() {
-		
-		// TODO: Normalize the add and remove methods. Below is copy-pasted with minor tweaks. Fix.
 
-		String promptSelect = "To select, please enter the product id.";
-		String promptQuantity = "Please enter the quantity you'd like to remove.";
-
-		String response = ConsoleUtils.displayPrompt(promptSelect);
-
-		int productId = -1;
-		int quantity = -1;
-
-		while (!ConsoleUtils.isValidInt(response)) {
-
-			System.out.println("Product ID not found in catalog: " + response);
-			response = ConsoleUtils.displayPrompt(promptSelect);
-		}
-
-		productId = Integer.parseInt(response);
-
-		while (!this.catalog.containsKey(productId)) {
-
-			System.out.println("Product ID not found in catalog: " + response);
-			response = ConsoleUtils.displayPrompt(promptSelect);
-
-		}
-
-		// Get the quantity
-		response = ConsoleUtils.displayPrompt(promptQuantity);
-
-		while (!ConsoleUtils.isValidInt(response)) {
-
-			System.out.println("This number does not seem real: " + response);
-
-			response = ConsoleUtils.displayPrompt(promptQuantity);
-
-		}
-
-		quantity = Integer.parseInt(response);
-		invoice.removeFromCart(productId, quantity);
-		System.out.println("Item removed from cart");
-
-		return ConsoleUtils.displayPrompt(String.format("Please select next task\r\n%s", OPTIONS));
+		System.out.println("Removed from cart");
+		return ConsoleUtils.displayPrompt("Enter next task");
 
 	}
 
