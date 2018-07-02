@@ -80,7 +80,17 @@
 		</echo>
 		
 		<echo file="${deploy.dir}/readme.txt">
-		build date : ${DSTAMP}
+build date : ${DSTAMP}
+Simple ecommerce cart demo. 
+To execute from the command line:
+cd to deploy dir
+Windows, execute run_cart_demo.bat
+Mac OS X, Linux, execute run_cart_demo.sh
+Make sure your $PATH sys variable points to a JRE
+Coded to Java 8 compliance on Mac OS X High Sierra
+Tested on Windows 10
+TODO: Fix the classpath problem in the jar to make it runnable
+			
 
 		</echo>
 		<echo file="${deploy.dir}/run_cart_demo.sh">
@@ -93,7 +103,7 @@
 
 	<target name="deploy" depends="create-shell-script">
 
-		<zip destfile="../../deploy.zip" basedir="${deploy.dir}"
+		<zip destfile="../deploy.zip" basedir="${deploy.dir}"
 			update="false">
 		</zip>
 
