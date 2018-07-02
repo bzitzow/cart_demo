@@ -76,6 +76,7 @@
 
 			java -version
 			java -cp bin com.fitz.main.CartDemo
+			pause
 		</echo>
 		
 		<echo file="${deploy.dir}/readme.txt">

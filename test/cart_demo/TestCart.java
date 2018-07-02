@@ -53,10 +53,10 @@ class TestCart {
 
 		Invoice invoice = new Invoice(customerId, catalog);
 
-		invoice.addProduct(0, 1);
-		invoice.addProduct(0, 1);
-		invoice.addProduct(1, 1);
-		invoice.addProduct(2, 2);
+		invoice.addToCart(0, 1);
+		invoice.addToCart(0, 1);
+		invoice.addToCart(1, 1);
+		invoice.addToCart(2, 2);
 
 		Map<Integer, Integer> cart = invoice.getCart();
 
