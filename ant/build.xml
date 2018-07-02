@@ -81,6 +81,7 @@
 		
 		<echo file="${deploy.dir}/readme.txt">
 build date : ${DSTAMP}
+repo: github.com/rustyrabbit/cart_demo
 Simple ecommerce cart demo. 
 To execute from the command line:
 cd to deploy dir
